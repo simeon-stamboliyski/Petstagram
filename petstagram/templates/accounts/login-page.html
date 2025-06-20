@@ -1,114 +1,33 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<!-- Starts Head Section -->
-<head>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
-    <title>Petstagram</title>
-</head>
-<!-- End Head Section -->
+{% extends 'base.html' %} 
+{% block content %}
+<!-- Start Login Section-->
+<div class="login-register-div">
+    <div class="login-register-box">
+        <h1>Petstagram</h1>
 
-<!-- Starts Body Section -->
-<body>
+        <!-- Start Login Form-->
+        <form action="{% url 'accounts:login' %}" method="post">
+            {% csrf_token %}
+            <p>
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" id="id_username" placeholder="Username" required>
+            </p>
+            <p>
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" placeholder="Password" required>
+            </p>
 
-<!-- Starts Header Section with Navigation Bar -->
-<header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <!-- Link to Home Page -->
-                <a href="{% url 'home' %}">
-                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
-                </a>
+            <!-- Login Button-->
+            <button type="submit">Log in</button>
+        </form>
+        <!-- End Login Form -->
 
-                <!-- Link to Home Page -->
-                <a class="home" href="{% url 'home' %}">
-                    <i>Petstagram</i>
-                </a>
-            </div>
-
-            <div class="nav-links">
-                <ul class="nav-group">
-                    <li class="nav-item">
-
-                        <!-- Link to Add Pet Page -->
-                        <a href="{% url 'pets:add' %}">
-                            <i>Add Pet</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <!-- Link to Add Photo Page -->
-                        <a href="{% url 'photos:add' %}">
-                            <i>Add Photo</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <!-- Link to Login Page -->
-                        <a href="{% url 'accounts:login' %}">
-                            <i>Login</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <!-- Link to Register Page -->
-                        <a href="{% url 'accounts:register' %}">
-                            <i>Register</i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<!-- End Header Section with Navigation Bar -->
-
-<!-- Starts Main Section -->
-<main>
-
-    <!-- Start Login Section-->
-    <div class="login-register-div">
-        <div class="login-register-box">
-            <h1>Petstagram</h1>
-
-            <!-- Start Login Form-->
-            <form action="{% url 'accounts:login' %}" method="post">
-                {% csrf_token %}
-                <p>
-                    <label for="id_username">Username:</label>
-                    <input type="text" name="username" id="id_username" placeholder="Username" required>
-                </p>
-                <p>
-                    <label for="id_password">Password:</label>
-                    <input type="password" name="password" id="id_password" placeholder="Password" required>
-                </p>
-
-                <!-- Login Button-->
-                <button type="submit">Log in</button>
-            </form>
-            <!-- End Login Form -->
-
-        </div>
-        <div class="second-option">
-
-            <!-- Link to Register Page-->
-            <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register</a></p>
-        </div>
     </div>
-    <!-- End Login Section-->
+    <div class="second-option">
 
-</main>
-<!-- End Main Section -->
-
-<!-- Start Footer Section -->
-<div class="footer">
-    <span class="footer-section">
-        © 2024 SOFTUNI WORKSHOP FOR PYTHON WEB MODULE
-    </span>
+        <!-- Link to Register Page-->
+        <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register</a></p>
+    </div>
 </div>
-<!-- End Footer Section -->
-
-</body>
-</html>
+<!-- End Login Section-->
+{% endblock %}

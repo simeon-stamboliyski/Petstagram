@@ -1,112 +1,31 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<!-- Starts Head Section -->
-<head>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
-    <title>Petstagram</title>
-</head>
-<!-- End Head Section -->
+{% extends 'base.html' %} 
+{% block content %}
+<!-- Start Register Section -->
+<div class="login-register-div">
+    <div class="login-register-box">
+        <h1>Petstagram</h1>
 
-<!-- Starts Body Section -->
-<body>
+        <!-- Start Register Form -->
+        <form action="">
+            <input type="text" placeholder="Username">
 
-<!-- Starts Header Section with Navigation Bar -->
-<header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <!-- Link to Home Page -->
-                <a href="{% url 'home' %}">
-                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
-                </a>
+            <input type="email" placeholder="Email">
 
-                <!-- Link to Home Page -->
-                <a class="home" href="{% url 'home' %}">
-                    <i>Petstagram</i>
-                </a>
-            </div>
+            <input type="password" placeholder="Password">
 
-            <div class="nav-links">
-                <ul class="nav-group">
-                    <li class="nav-item">
+            <input type="password" placeholder="Repeat Password">
 
-                        <!-- Link to Add Pet Page -->
-                        <a href="{% url 'pets:add' %}">
-                            <i>Add Pet</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+            <!-- Register Button -->
+            <button type="submit">Register</button>
+        </form>
+        <!-- End Register Form -->
 
-                        <!-- Link to Add Photo Page -->
-                        <a href="{% url 'photos:add' %}">
-                            <i>Add Photo</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <!-- Link to Login Page -->
-                        <a href="{% url 'accounts:login' %}">
-                            <i>Login</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <!-- Link to Register Page -->
-                        <a href="{% url 'accounts:register' %}">
-                            <i>Register</i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<!-- End Header Section with Navigation Bar -->
-
-<!-- Starts Main Section -->
-<main>
-
-    <!-- Start Register Section -->
-    <div class="login-register-div">
-        <div class="login-register-box">
-            <h1>Petstagram</h1>
-
-            <!-- Start Register Form -->
-            <form action="">
-                <input type="text" placeholder="Username">
-
-                <input type="email" placeholder="Email">
-
-                <input type="password" placeholder="Password">
-
-                <input type="password" placeholder="Repeat Password">
-
-                <!-- Register Button -->
-                <button type="submit">Register</button>
-            </form>
-            <!-- End Register Form -->
-
-        </div>
-        <div class="second-option">
-
-            <!-- Link to Login Page -->
-            <p>Have an account? <a href="#">Log in</a></p>
-        </div>
     </div>
-    <!-- End Register Section -->
+    <div class="second-option">
 
-</main>
-<!-- End Main Section -->
-
-<!-- Start Footer Section -->
-<div class="footer">
-		<span class="footer-section">
-			© 2024 SOFTUNI WORKSHOP FOR PYTHON WEB MODULE
-		</span>
+        <!-- Link to Login Page -->
+        <p>Have an account? <a href="#">Log in</a></p>
+    </div>
 </div>
-<!-- End Footer Section -->
-
-</body>
-</html>
+<!-- End Register Section -->
+{% endblock %}
