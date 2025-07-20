@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 
 from petstagram.accounts.forms import AppUserCreationForm, AppUserLoginForm, ProfileEditForm
 from petstagram.accounts.models import Profile
+from petstagram.photos.models import Photo
 
 UserModel = get_user_model()
 
@@ -32,13 +33,27 @@ class details(views.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.object
-        context['user_photos'] = user.photo_set.all()
+        context['user_photos'] = (
+            Photo.objects
+                .filter(user_id=self.object.pk)
+                .order_by('-date_of_publication')
+        )
         context['user_pets'] = user.pet_set.all()
         context['total_likes_count'] = sum(p.like_set.count() for p in user.photo_set.all())
         return context
 
-def delete(request):
-    return render(request, 'accounts/profile-delete-page.html')
+class delete(views.DeleteView):
+    model = UserModel
+    template_name = 'accounts/profile-delete-page.html'
+    success_url = reverse_lazy('home')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+    
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return redirect(self.get_success_url())
 
 class edit(views.UpdateView):
     model = UserModel
