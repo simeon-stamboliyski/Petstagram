@@ -28,20 +28,7 @@
 
             <div class="nav-links">
                 <ul class="nav-group">
-                    <li class="nav-item">
-
-                        <!-- Link to Add Pet Page -->
-                        <a href="{% url 'pets:add' %}">
-                            <i>Add Pet</i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-
-                        <!-- Link to Add Photo Page -->
-                        <a href="{% url 'photos:add' %}">
-                            <i>Add Photo</i>
-                        </a>
-                    </li>
+                    {% if not request.user.is_authenticated %}
                     <li class="nav-item">
 
                         <!-- Link to Login Page -->
@@ -56,6 +43,43 @@
                             <i>Register</i>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+
+                        <!-- Link to Add Pet Page -->
+                        <a href="{% url 'pets:add' %}">
+                            <i>Add Pet</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <!-- Link to Add Photo Page -->
+                        <a href="{% url 'photos:add' %}">
+                            <i>Add Photo</i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item"> 
+                        <!-- Link to Profile Page --> 
+                        <a href="{% url 'accounts:details' request.user.pk %}"> 
+                            <i>Profile</i> 
+                        </a> 
+                    </li> 
+                    
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'accounts:logout' %}"> 
+                            {% csrf_token %} 
+                            <button style="background-color: white !important; 
+                                           border: none !important; 
+                                           font-size: 22px !important; 
+                                           margin: 2.5px 0px 0px 8px !important; 
+                                           padding: 0 !important; 
+                                           cursor: pointer !important;
+                                           text-decoration: none !important;" 
+                            type="submit"><i>Logout</i></button> 
+                        </form>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

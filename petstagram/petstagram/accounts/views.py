@@ -1,12 +1,28 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import views as auth_views, get_user_model 
+from django.urls import reverse_lazy
+from django.views import generic as views
+from django.http import HttpResponseRedirect
 
-def register(request):
-    return render(request, 'accounts/register-page.html')
+from petstagram.accounts.forms import AppUserCreationForm, AppUserLoginForm
+from petstagram.accounts.models import Profile
 
-def login(request):
-    return render(request, 'accounts/login-page.html')
+UserModel = get_user_model()
+
+class register(views.CreateView):
+    model = UserModel
+    form_class = AppUserCreationForm
+    template_name = 'accounts/register-page.html'
+    success_url = reverse_lazy('accounts:login')
+
+class login(auth_views.LoginView):
+    form_class = AppUserLoginForm
+    template_name = 'accounts/login-page.html'
+    
+    def form_valid(self, form):
+        super().form_valid(form)
+        profile_instance, _ = Profile.objects.get_or_create(user=self.request.user)
+        return HttpResponseRedirect(self.get_success_url())
 
 def details(request):
     return render(request, 'accounts/profile-details-page.html')
@@ -17,5 +33,5 @@ def delete(request):
 def edit(request):
     return render(request, 'accounts/profile-edit-page.html')
 
-def logout(request, pk):
-    return redirect('login')
+class logout(auth_views.LogoutView):
+    pass
