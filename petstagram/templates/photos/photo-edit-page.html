@@ -5,32 +5,18 @@
     <h2>Edit photo</h2>
 
     <!-- Starts Edit Photo Form -->
-    <form action="">
-
-        <p>
-            <label for="id_description">Description:</label>
-            <input type="text" name="description" id="id_description" value="Sasho is an Axolotl">
-        </p>
-
-        <p>
-            <label for="id_photo_shooting_location">Location:</label>
-            <input type="text" name="photo_shooting_location" maxlength="50" id="id_photo_shooting_location"
-                    value="Bansko, Bulgaria">
-        </p>
-
-        <p>
-            <label for="id_tagged_pets">Tag Pets:</label>
-
-            <select name="pets" id="id_tagged_pets" multiple>
-                <option selected>Sasho</option>
-                <option>Perry</option>
-                <option>Bucky</option>
-                <option>Steve</option>
-            </select>
-        </p>
-
-        <!-- Edit Photo Button -->
-        <button class="edit-btn" type="submit">Edit Photo</button>
+    <form method="post">            
+        {% csrf_token %}            
+        {% for field in form %}
+            <p class="error"> {{ field.errors }} </p>               
+            <div class="label-input">                    
+                <label>{{ field.label }}</label>                    
+                {{ field }}                
+            </div>                
+            <br>
+            {% endfor %}            
+            <!-- Edit Profile Button -->            
+            <button class="edit-btn" type="submit">Edit</button>
     </form>
     <!-- End Edit Photo Form -->
 

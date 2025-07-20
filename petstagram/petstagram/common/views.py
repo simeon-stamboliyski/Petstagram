@@ -27,12 +27,12 @@ def page_404(request, exception):
 
 def like_functionality(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
-    liked_object = Like.objects.filter(to_photo_id=photo_id).first()
+    liked_object = Like.objects.filter(to_photo_id=photo_id, user=request.user).first()
     
     if liked_object:
         liked_object.delete()
     else:
-        like = Like(to_photo=photo)
+        like = Like(to_photo=photo, user=request.user)
         like.save()
 
     return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')
@@ -50,6 +50,7 @@ def add_comment(request, photo_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.to_photo = photo
+            comment.user = request.user
             comment.save()
 
     return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')

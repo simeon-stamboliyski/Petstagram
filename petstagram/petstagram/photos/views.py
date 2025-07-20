@@ -1,14 +1,23 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from petstagram.photos.models import Photo
 from petstagram.photos.forms import PhotoCreateForm
 
-def photo_add(request):
-    form = PhotoCreateForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        form.save()
-        return redirect('home')
-    context = {'form': form}
-    return render(request, 'photos/photo-add-page.html', context=context)
+class photo_add(LoginRequiredMixin, auth_views.CreateView):
+    model = Photo
+    form_class = PhotoCreateForm
+    template_name = 'photos/photo-add-page.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        response = super().form_valid(form)
+        form.save_m2m()
+        return response
+    
+    def get_success_url(self):
+        return reverse_lazy('photos:details', kwargs={'pk': self.object.pk})
 
 def photo_edit(request, pk):
     return render(request, 'photos/photo-edit-page.html')

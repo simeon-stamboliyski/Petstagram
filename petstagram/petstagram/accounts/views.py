@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 from django.http import HttpResponseRedirect
 
-from petstagram.accounts.forms import AppUserCreationForm, AppUserLoginForm
+from petstagram.accounts.forms import AppUserCreationForm, AppUserLoginForm, ProfileEditForm
 from petstagram.accounts.models import Profile
 
 UserModel = get_user_model()
@@ -30,8 +30,19 @@ def details(request):
 def delete(request):
     return render(request, 'accounts/profile-delete-page.html')
 
-def edit(request):
-    return render(request, 'accounts/profile-edit-page.html')
+class edit(views.UpdateView):
+    model = UserModel
+    form_class = ProfileEditForm
+    template_name = 'accounts/profile-edit-page.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+    
+    def get_success_url(self):
+        return reverse_lazy(
+            'details',
+            kwargs={'pk': self.object.pk}
+        )
 
 class logout(auth_views.LogoutView):
     pass

@@ -9,16 +9,20 @@
                 <div class="profilepic">
                     <div class="profile_img">
                         <div class="image">
-                            <img src="{% static 'images/person.png' %}" alt="Profile Picture">
+                            {% if photo.user.profile.profile_picture %}
+                                <img src="{{ photo.user.profile.profile_picture }}">
+                            {% else %}
+                                <img src="{% static 'images/person.png' %}" alt="Profile Picture">
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </a>
             <h3>
                 <!-- Replace with actual user info if available -->
-                <a href="#">
+                <a href="{% url 'details' photo.user.pk %}">
                     <!-- username or full name -->
-                    User Placeholder
+                    {{ photo.user.profile.get_profile_name }}
                 </a>
                 <br>
                 {% if photo.location %}
