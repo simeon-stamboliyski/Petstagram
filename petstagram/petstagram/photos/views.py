@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import views as auth_views
+from django.views import generic as views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from petstagram.photos.models import Photo
 from petstagram.photos.forms import PhotoCreateForm
 
-class photo_add(LoginRequiredMixin, auth_views.CreateView):
+class photo_add(LoginRequiredMixin, views.CreateView):
     model = Photo
     form_class = PhotoCreateForm
     template_name = 'photos/photo-add-page.html'

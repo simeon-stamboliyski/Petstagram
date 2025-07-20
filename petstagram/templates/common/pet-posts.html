@@ -67,7 +67,7 @@
 
         <!-- Start Tagged Pets -->
         {% for pet in photo.tagged_pets.all %}
-            <a href="#">
+            <a href="{% url 'pet-details' pet.user.profile.get_profile_name|lower pet.slug %}">
                 <p class="message">
                     <b>{{ pet.name }}</b>
                 </p>

@@ -24,8 +24,18 @@ class login(auth_views.LoginView):
         profile_instance, _ = Profile.objects.get_or_create(user=self.request.user)
         return HttpResponseRedirect(self.get_success_url())
 
-def details(request):
-    return render(request, 'accounts/profile-details-page.html')
+class details(views.DetailView):
+    model = UserModel
+    template_name = 'accounts/profile-details-page.html'
+    context_object_name = 'profile_user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.object
+        context['user_photos'] = user.photo_set.all()
+        context['user_pets'] = user.pet_set.all()
+        context['total_likes_count'] = sum(p.like_set.count() for p in user.photo_set.all())
+        return context
 
 def delete(request):
     return render(request, 'accounts/profile-delete-page.html')
